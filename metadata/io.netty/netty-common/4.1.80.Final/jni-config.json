@@ -687,7 +687,7 @@
   },
   {
     "condition": {
-      "typeReachable": "io.netty.util.internal.NativeLibraryUtil"
+      "typeReachable": "io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider"
     },
     "name": "io.netty.resolver.dns.macos.DnsResolver",
     "methods": [
@@ -707,7 +707,7 @@
   },
   {
     "condition": {
-      "typeReachable": "io.netty.util.internal.NativeLibraryUtil"
+      "typeReachable": "io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider"
     },
     "name": "io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider"
   },

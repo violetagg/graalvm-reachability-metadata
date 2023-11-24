@@ -26,6 +26,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
@@ -53,6 +54,8 @@ import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import io.netty.resolver.dns.DnsAddressResolverGroup;
+import io.netty.resolver.dns.DnsNameResolverBuilder;
 import io.netty.util.CharsetUtil;
 import org.awaitility.Awaitility;
 import org.hamcrest.CoreMatchers;
@@ -101,6 +104,8 @@ public class NettyTests {
         }
         Bootstrap b = new Bootstrap();
         b.group(group).channel(NioSocketChannel.class).handler(new HttpClientInitializer(sslContext, callback));
+        DnsNameResolverBuilder builder = new DnsNameResolverBuilder(group.next()).channelType(NioDatagramChannel.class);
+        b.resolver(new DnsAddressResolverGroup(builder));
         Channel ch = b.connect("localhost", PORT).sync().channel();
         HttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, "/", Unpooled.EMPTY_BUFFER);
         request.headers().set(HttpHeaderNames.HOST, "localhost");
